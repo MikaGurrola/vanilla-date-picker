@@ -2,12 +2,14 @@ import cx from 'classnames';
 
 export interface DayProps {
 	className?: string,
-	// types: string[]
+	date: number,
 }
 
 export default function Day(props:DayProps) {
-	const { className } = props;
+	const { className, date } = props;
 	return <div className={cx(className)}>
-		<p>day</p>
+		<button className='p-4 border-solid border-2  rounded'>
+			{date}
+		</button>
 	</div>;
 }

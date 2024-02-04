@@ -9,13 +9,12 @@ export interface WeekProps {
 export default function Week(props:WeekProps) {
 	const { className } = props;
 	return <div className={cx(className)}>
-		<p>week</p>
-		<Day />
-		<Day />
-		<Day />
-		<Day />
-		<Day />
-		<Day />
-		<Day />
+		<Day date={1} />
+		<Day date={2} />
+		<Day date={3} />
+		<Day date={4} />
+		<Day date={5} />
+		<Day date={6} />
+		<Day date={7} />
 	</div>;
 }
