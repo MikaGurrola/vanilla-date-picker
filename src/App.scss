@@ -1,0 +1,246 @@
+* {
+  font-family: 'Rubik', sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  /* mobile viewport bug fix */
+  min-height: -webkit-fill-available;
+
+
+  display: flex;
+  flex-direction: column;
+}
+
+
+#root, .App, .app-container {
+  flex : 1;
+  display: flex;
+  flex-direction: column;
+}
+
+html {
+  height: -webkit-fill-available;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+
+.material-symbols-rounded {
+  font-variation-settings:
+  'FILL' 1,
+  'wght' 700,
+  'GRAD' 0,
+  'opsz' 48
+}
+
+/* pokemon colors by type */
+
+/* light colors */
+:root {
+  --bug: #A8B820;
+  --onBug: #000;
+
+  --dark: #705848;
+  --onDark: #fff;
+
+  --dragon: #7038F8;
+  --onDragon: #fff;
+
+  --electric: #F8D030;
+  --onElectric: #000;
+
+  --fairy: #EE99AC;
+  --onFairy: #000;
+
+  --fighting: #C03028;
+  --onFighting: #fff;
+
+  --fire: #F08030;
+  --onFire: #000;
+
+  --flying: #A890F0;
+  --onFlying: #000;
+
+  --ghost: #705898;
+  --onGhost: #fff;
+
+  --grass: #78C850;
+  --onGrass: #000;
+
+  --ground: #E0C068;
+  --onGround: #000;
+
+  --ice: #98D8D8;
+  --onIce: #000;
+
+  --normal: #A8A878;
+  --onNormal: #000;
+
+  --poison: #A040A0;
+  --onPoison: #fff;
+
+  --psychic: #F85888;
+  --onPsychic: #000;
+
+
+  --rock: #B8A038;
+  --onRock: #000;
+
+
+  --steel: #B8B8D0;
+  --onSteel: #000;
+
+  --water: #6890F0;
+  --onWater: #fff;
+
+
+
+  --border-color: rgb(229, 231, 235);
+  --border-radius: 24px;
+}
+
+
+/* @media (prefers-color-scheme: dark) {
+  :root {
+    --bug: #6D7815;
+    --onBug: #fff;
+
+    --dark: #49392F;
+    --ondark: #fff;
+
+    --dragon: #4924A1;
+    --onDragon: #fff;
+
+    --electric: #A1871F;
+    --onElectric: #fff;
+
+    --fairy: #EE99AC;
+    --onFairy: #9B6470;
+
+    --fighting: #7D1F1A;
+    --onFighting: #000;
+
+  }
+} */
+
+
+
+.bug {
+  background: var(--bug);
+  color: var(--onBug);
+}
+.dark {
+  background: var(--dark);
+  color: var(--onDark);
+}
+.dragon {
+  background: var(--dragon);
+  color: var(--onDragon);
+}
+.electric {
+  background: var(--electric);
+  color: var(--onElectric);
+}
+.fairy {
+  background: var(--fairy);
+  color: var(--onFairy);
+}
+.fighting {
+  background: var(--fighting);
+  color: var(--onFighting);
+}
+.fire {
+  background: var(--fire);
+  color: var(--onFire);
+}
+.flying {
+  background: var(--flying);
+  color: var(--onFlying);
+}
+.ghost {
+  background: var(--ghost);
+  color: var(--onGhost);
+}
+.grass {
+  background: var(--grass);
+  color: var(--onGrass);
+}
+.ground {
+  background: var(--ground);
+  color: var(--onGround);
+}
+.ice {
+  background: var(--ice);
+  color: var(--onIce);
+}
+.normal {
+  background: var(--normal);
+  color: var(--onNormal);
+}
+.poison {
+  background: var(--poison);
+  color: var(--onPoison);
+}
+.psychic {
+  background: var(--psychic);
+  color: var(--onPsychic);
+}
+.rock {
+  background: var(--rock);
+  color: var(--onRock);
+}
+.steel {
+  background: var(--steel);
+  color: var(--onSteel);
+}
+.water {
+  background: var(--water);
+  color: var(--onWater);
+}
+
+
+.ReactModal__Content {
+  max-width: 800px !important;
+  margin: 0 auto !important;
+  padding: 0 !important;
+  border: 2px solid var(--border-color) !important;
+  border-radius: var(--border-radius) !important;
+  @media screen and (max-width: 681px) {
+    border: 0 !important;
+    border-radius: 0 !important;
+    top: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    left: 0 !important;
+  }
+
+  display: flex;
+  align-items: center;
+  justify-content: stretch;
+}
+
+
+.ReactModal__Overlay {
+  z-index: 100;
+  opacity: 0;
+  transform: translateY(100px);
+  transition: all 500ms cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+.ReactModal__Overlay--after-open {
+  opacity: 1;
+  transform: translateY(0px);
+}
+
+.ReactModal__Overlay--before-close {
+  opacity: 0;
+  transform: translateY(100px);
+}
+
+.pokemon-details-wrapper {
+  height: 100%;
+  width: 100%;
+}
