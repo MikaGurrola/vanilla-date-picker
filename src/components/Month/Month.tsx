@@ -1,33 +1,33 @@
 import cx from 'classnames';
 import Day from '../Day';
-import { daysOfTheWeek, getYears, months, years } from '../../helpers/dateHelper';
+import { DayInterface, daysOfTheWeek, getYears, months } from '../../helpers/dateHelper';
 import Select from '../Select';
 
 export interface MonthProps {
 	className?: string,
-	month: any,
-	year: any,
-	endDate: any,
-	fullViewDates: any, 
+	endDateString: string,
+	fullViewDates: DayInterface[], 
 	handleSelect: any,
+	month: string,
 	onMonthChange: any,
 	onYearChange: any,
-	startDate: any,
 	srMessage: string,
+	startDateString: string,
+	year: string,
 }
 
 export default function Month(props:MonthProps) {
 	const { 
 		className,
-		month,
-		year,
-		endDate,
+		endDateString,
 		fullViewDates,
 		handleSelect,
+		month,
 		onMonthChange, 
 		onYearChange,
-		startDate,
 		srMessage,
+		startDateString,
+		year,
 	} = props;
 
 	return <div className={cx(className, 'p-6')}>
@@ -41,7 +41,6 @@ export default function Month(props:MonthProps) {
 				label={'Month'}
 				options={months}
 				onSelect={onMonthChange}
-				// value={months[month]}
 				value={month}
 			/>
 
@@ -49,7 +48,7 @@ export default function Month(props:MonthProps) {
 				label={'Year'}
 				options={getYears()}
 				onSelect={onYearChange}
-				value={year.toString()}
+				value={year}
 			/>
 		</div>
 		
@@ -57,8 +56,8 @@ export default function Month(props:MonthProps) {
 		<div className="daysOfWeek">
 			{
 				daysOfTheWeek.map((day: string, i: number) => <span 
-						className="p-2" 
 						key={`${day}-${i}`}
+						className="p-2" 
 					>
 						{day}
 					</span>
@@ -70,47 +69,15 @@ export default function Month(props:MonthProps) {
 		<div className="days">
 			{
 				fullViewDates.length > 0 && fullViewDates.map((day:any) => {
-					// TODO Refactor 
-
-					// return <Day 
-					// 	date={day} 
-					// 	handleSelect={handleSelect}
-					// 	isEndDate={day.getTime() === endDate.getTime()}
-					// 	isInCurrentMonth={day.getMonth() === month}
-					// 	isStartDate={day.getTime() === startDate.getTime()}
-					// 	isTheWeekend={day.getDay() === 0 || day.getDay() === 6}
-					// 	isWithinRange={day.getTime() > startDate.getTime() && day.getTime() < endDate.getTime()}
-					// 	key={`${day.getMonth()}-${day.getDate()}-${day.getFullYear()}`} 
-					// />
-
-					
-					// console.log(day)
-
-
-					// return <Day 
-					// 	date={day.dateObj} 
-					// 	handleSelect={handleSelect}
-					// 	// isEndDate={day.getTime() === endDate.getTime()}
-					// 	isInCurrentMonth={day.getMonth() === month}
-					// 	// isStartDate={day.getTime() === startDate.getTime()}
-					// 	isTheWeekend={day.getDay() === 0 || day.getDay() === 6}
-					// 	// isWithinRange={day.getTime() > startDate.getTime() && day.getTime() < endDate.getTime()}
-					// 	// key={`${day.getMonth()}-${day.getDate()}-${day.getFullYear()}`} 
-					// />
 
 					return <Day 
+						key={`${day.dateString}`} 
+
 						day={day} 
 						handleSelect={handleSelect}
-						startDate={startDate}
-						endDate={endDate}
+						startDateString={startDateString}
+						endDateString={endDateString}
 						month={month}
-
-						// isEndDate={day.day === endDate.getTime()}
-						// isInCurrentMonth={day.month === month}
-						// isStartDate={day.day === startDate.getTime()}
-						// isTheWeekend={day.weekDay === 0 || day.weekDay === 6}
-						// isWithinRange={day.getTime() > startDate.getTime() && day.getTime() < endDate.getTime()}
-						key={`${day.dateString}`} 
 					/>
 
 				})

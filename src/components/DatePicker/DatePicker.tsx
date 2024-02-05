@@ -1,55 +1,45 @@
 import cx from 'classnames';
 import Month from '../Month';
-import { formatDate, getWeekendDates } from '../../helpers/dateHelper';
+import { getWeekendDates } from '../../helpers/dateHelper';
 
 export interface DatePickerProps {
 	className?: string,
+	endDateString: string,
+	fullViewDates: any,
+	month:any, 
 	onDateRangeChanged: any,
 	onMonthChange: any, 
 	onYearChange: any, 
-	month:any, 
-	year: any, 
-	fullViewDates: any,
-	startDate: any,
-	endDate: any,
 	srMessage: string,
 	srOnDateRangeChanged: any, 
+	startDateString: any,
+	year: any, 
 }
 
 
 export default function DatePicker(props:DatePickerProps) {
 	const { 
 		className,
+		endDateString,
+		fullViewDates,
+		month, 
 		onDateRangeChanged,
 		onMonthChange,
 		onYearChange,
-		month, 
-		year,
-		fullViewDates,
-		startDate,
-		endDate,
 		srMessage,
 		srOnDateRangeChanged,
+		startDateString,
+		year,
 	} = props;
 
 	const handleSelect = (day: any) => {
+
 		if(
-			!startDate // no start date 
-			|| (startDate && endDate) // if already have a start/end date, make a new range
-			|| ((new Date(startDate)).getTime() > day.day) // if date is before already selected start date
+			!startDateString // no start date 
+			|| (startDateString && endDateString) // if already have a start/end date, make a new range
+			|| (startDateString > day.dateString) // if date is before already selected start date
 		) {
 
-			console.log('startDate', startDate)
-			// // set/reset start date
-			// onDateRangeChanged(
-			// 	[
-			// 		formatDate(date),
-			// 		null
-			// 	], 
-			// 	[]
-			// );
-
-			// srOnDateRangeChanged(`Starting Date: ${formatDate(date)}`);
 			// set/reset start date
 			onDateRangeChanged(
 				[
@@ -61,29 +51,16 @@ export default function DatePicker(props:DatePickerProps) {
 
 			srOnDateRangeChanged(`Starting Date: ${day.dateString}`);
 
-			// set/reset start date
-			console.log('day: ', day)
-
 		} else {
-			// onDateRangeChanged(
-			// 	[
-			// 		startDate,
-			// 		formatDate(date)
-			// 	], 
-			// 	[getWeekendDates((new Date(startDate)), date, fullViewDates)]
-			// );
-
-			// srOnDateRangeChanged(`Selected date range from ${startDate} to ${formatDate(date)}`);
-
 			onDateRangeChanged(
 				[
-					startDate,
+					startDateString,
 					day.dateString
 				], 
-				[getWeekendDates((new Date(startDate)), day.dateObj, fullViewDates)]
+				[getWeekendDates((new Date(startDateString)), day.dateObj, fullViewDates)]
 			);
 
-			srOnDateRangeChanged(`Selected date range from ${startDate} to ${day.dateString}`);
+			srOnDateRangeChanged(`Selected date range from ${startDateString} to ${day.dateString}`);
 
 
 		}
@@ -91,15 +68,15 @@ export default function DatePicker(props:DatePickerProps) {
 
 	return <div className={cx(className)}>
 		<Month 
-			month={month} 
-			year={year}
+			startDateString={startDateString}
+			endDateString={endDateString}
 			fullViewDates={fullViewDates}
-			endDate={(new Date(endDate))}
 			handleSelect={handleSelect}
+			month={month} 
 			onMonthChange={onMonthChange}
 			onYearChange={onYearChange}
-			startDate={(new Date(startDate))}
 			srMessage={srMessage}
+			year={year}
 		/>
 	</div>;
 }

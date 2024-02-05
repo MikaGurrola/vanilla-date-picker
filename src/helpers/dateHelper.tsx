@@ -23,6 +23,16 @@ export const years = [
   '2026',
 ];
 
+export interface DayInterface {
+  dateObj: Date,
+  day: number,
+  month: number,
+  year: string,
+  weekDay: number,
+  dateString: string,
+  monthString: string
+}
+
 export const getYears = () => {
   const year =  new Date().getFullYear();
 
@@ -47,29 +57,29 @@ export const daysOfTheWeek = [
   'S'
 ]
 
-export const getWeekendDates = (startDate: Date, endDate: Date, fullMonth: any) => {
+export const getWeekendDates = (startDate: Date, endDate: Date, fullMonth: DayInterface[]) => {
   let weekends:any = [];
 
+  // console.log('startDate', startDate)
+  // console.log('endDate', endDate)
+  // console.log('fullMonth', fullMonth)
+
   for(let i = 0; i < fullMonth.length; i++) {
-    let date = fullMonth[i],
+    let date = fullMonth[i].dateObj,
         isWithinRange = date > startDate && date < endDate,
         isTheWeekend = date.getDay() === 0 || date.getDay() === 6;
       
     // if this date is within range and the weekend, push to weekend date
     if( isWithinRange && isTheWeekend) {
-      weekends.push(formatDate(date));
+      weekends.push(stringifyDate(date));
     }
   }
 
   return weekends;
 }
 
-export const formatDate = (date: Date) => {
-  let day = date.getDate(),
-      month = date.getMonth(), // JS date months start at index 0 so increment for returned dates
-      year = date.getFullYear();
-  
-  return `${year}-${month + 1}-${day}`;
+export const stringifyDate = (date: Date) => {
+  return date.toISOString().split('T')[0];
 }
 
 
@@ -78,14 +88,15 @@ export const formatDate = (date: Date) => {
 export const generateMonth = (month: number, year: number) => {
   const totalDaysInMonth = new Date(year, (month + 1), 0).getDate(); // supposed to be monthIndex; help
 
-  let _formatDate = (date: Date) => {
-    // console.log('month', date.toISOString().split('T')[0]);
+  let _formatDate = (date: Date): DayInterface => {
     let dateString = date.toISOString().split('T')[0], 
         parts = dateString.split('-'),
         year = parts[0],
         month = parseInt(parts[1]),
         day = parseInt(parts[2]);
 
+    // all these properties are for ease of use for comparison and checks in UI 
+    // spend the processing here rather than in view 
     return {
       dateObj: date,
       day,
