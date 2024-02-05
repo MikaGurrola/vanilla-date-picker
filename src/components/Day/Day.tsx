@@ -1,15 +1,31 @@
 import cx from 'classnames';
+import { MouseEventHandler } from 'react';
 
 export interface DayProps {
 	className?: string,
-	date: number,
+	date: Date, 
+	isInCurrentMonth: boolean,
+	handleSelect: any, 
 }
 
 export default function Day(props:DayProps) {
-	const { className, date } = props;
+	const { 
+		className, 
+		date, 
+		isInCurrentMonth, 
+		handleSelect
+	} = props;
 	return <div className={cx(className)}>
-		<button className='p-4 border-solid border-2  rounded'>
-			{date}
+		<button 
+			className={`
+				p-4  rounded aspect-square 
+				${isInCurrentMonth && 'bg-slate-50'}
+			`}
+			onClick={() => {
+				handleSelect(date)
+			} }
+		>
+			{date.getDate()}
 		</button>
 	</div>;
 }

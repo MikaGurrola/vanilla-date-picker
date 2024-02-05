@@ -12,6 +12,20 @@ const styledMonth = styled(Month)`
       display: grid;
       grid-template-columns: 1fr 1fr;
     }
+
+    .daysOfWeek {
+      display: grid; 
+      grid-template-columns: repeat(7, 1fr);
+      grid-gap: 4px;
+      justify-items: center;
+    }
+
+    .days {
+      display: grid; 
+      grid-template-columns: repeat(7, 1fr);
+      max-width: fit-content; 
+      grid-gap: 4px;
+    }
   }
 
 `
