@@ -22,7 +22,7 @@ export default function Day(props:DayProps) {
 
 	return <div className={cx(className)}>
 		<button 
-			aria-label={`${day.monthString} of ${day.monthString}`}
+			aria-label={day.dateString}
 			className={`
 				aspect-square disabled:cursor-not-allowed rounded p-4
 				focus-within:bg-blue-100 focus-within:outline outline-offset-2 outline-2 outline-blue-500
