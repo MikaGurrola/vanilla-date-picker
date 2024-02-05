@@ -6,13 +6,19 @@ export interface MonthProps {
 	className?: string,
 	activeMonth: any,
 	activeYear: any,
+	endDate: any,
+	handleSelect: any,
+	startDate: any,
 }
 
 export default function Month(props:MonthProps) {
 	const { 
 		className,
 		activeMonth,
-		activeYear 
+		activeYear,
+		endDate,
+		handleSelect,
+		startDate,
 	} = props;
 
 	const months = [
@@ -40,25 +46,25 @@ export default function Month(props:MonthProps) {
 		'S'
 	]
 
-	const [full_month, set_full_month] = useState<Date[]>([]);
+	const [fullMonth, setFullMonth] = useState<Date[]>([]);
 
 	const generate_month = () => {
-		const total_days_in_month = get_total_days_in_month(activeMonth, activeYear);
-		const full_month = generate_full_month(activeMonth, activeYear, total_days_in_month);
-		set_full_month(full_month);
+		const totalDaysInMonth = getTotalDaysInMonth(activeMonth, activeYear);
+		const fullMonth = generateFullMonth(activeMonth, activeYear, totalDaysInMonth);
+		setFullMonth(fullMonth);
 	}
 
-	const get_total_days_in_month = (month: number, year: number) => {
+	const getTotalDaysInMonth = (month: number, year: number) => {
 		// js date() is weird, 
 		// months start at 0, but using .getDate() uses non index of 0
 		return new Date(year, (++month), 0).getDate();
 	}
 
-	const generate_full_month = (month: number = 0, year: number = 0, total_days_in_month: number = 0) => {
+	const generateFullMonth = (month: number = 0, year: number = 0, totalDaysInMonth: number = 0) => {
 		let first_day_of_month = new Date(year, month, 1),
 				last_day_of_month = new Date(year, month + 1, 0);
 
-		let current_month_arr = Array.from({length: total_days_in_month}, (_, i) => {
+		let current_month_arr = Array.from({length: totalDaysInMonth}, (_, i) => {
 			return new Date(new Date(year, month, i + 1, 0, 0, 0, 0));
 		});
 
@@ -75,9 +81,6 @@ export default function Month(props:MonthProps) {
 		return [...extra_before_days.reverse(), ...current_month_arr, ...extra_after_days];
 	}
 
-	const handleSelect = (date: Date) => {
-		console.log('clicked a date', date);
-	}
 
 	useEffect(() => {
     generate_month()
@@ -105,11 +108,15 @@ export default function Month(props:MonthProps) {
 
 		<div className="days">
 			{
-				full_month.map((day, i) => <Day 
+				fullMonth.map((day) => <Day 
 					date={day} 
-					key={`${day.getMonth()}-${day.getDate()}-${day.getFullYear()}`} 
-					isInCurrentMonth={day.getMonth() === activeMonth}
 					handleSelect={handleSelect}
+					isEndDate={day === endDate}
+					isInCurrentMonth={day.getMonth() === activeMonth}
+					isStartDate={day === startDate}
+					isTheWeekend={day.getDay() === 0 || day.getDay() === 6}
+					isWithinRange={day > startDate && day < endDate}
+					key={`${day.getMonth()}-${day.getDate()}-${day.getFullYear()}`} 
 				/>)
 			}
 		</div>
