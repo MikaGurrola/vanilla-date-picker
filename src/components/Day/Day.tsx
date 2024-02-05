@@ -27,11 +27,11 @@ export default function Day(props:DayProps) {
 	return <div className={cx(className)}>
 		<button 
 			className={`
-				p-4 aspect-square disabled:text-slate-400 disabled:cursor-not-allowed"
-				${isInCurrentMonth && !isTheWeekend && 'text-slate-900'}
-				${!isInCurrentMonth && !isStartDate && !isEndDate && 'text-slate-400'}
-				${(isEndDate || isStartDate) && 'bg-blue-700 text-slate-50 rounded'}
-				${isWithinRange && !isTheWeekend && 'bg-blue-200 text-slate-900 rounded'}
+				p-4 aspect-square disabled:cursor-not-allowed
+				${isInCurrentMonth ? 'isInCurrentMonth' : ''}
+				${isStartDate ? 'isStartDate' : ''}
+				${isEndDate ? 'isEndDate' : ''}
+				${isWithinRange ? 'isWithinRange' : ''}
 			`}
 			onClick={() => {
 				handleSelect(date)

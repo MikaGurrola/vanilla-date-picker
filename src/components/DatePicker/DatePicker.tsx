@@ -1,10 +1,15 @@
 import cx from 'classnames';
 import Month from '../Month';
-import { useEffect, useState } from 'react';
+import { formatDate, getWeekendDates } from '../../helpers/dateHelper';
 
 export interface DatePickerProps {
 	className?: string,
 	onDateRangeChanged: any,
+	month:any, 
+	year: any, 
+	fullViewDates: any,
+	startDate: any,
+	endDate: any,
 }
 
 
@@ -12,51 +17,59 @@ export default function DatePicker(props:DatePickerProps) {
 	const { 
 		className,
 		onDateRangeChanged,
-	 } = props;
-
-	let today = new Date(),
-			month = today.getMonth(),
-			year = today.getFullYear();
-
-	const [dateRange, setDateRange] = useState<any>({
-		startDate: null,
-		endDate: null,
-		weekends: []
-	});
-
+		month, 
+		year,
+		fullViewDates,
+		startDate,
+		endDate,
+	} = props;
 
 	const handleSelect = (date: Date) => {
 		if(
-			!dateRange.startDate // no start date 
-			|| (dateRange.startDate && dateRange.endDate) // if already have a start/end date, make a new range
-			|| (dateRange.startDate > date) // if date is before already selected start date
+			!startDate // no start date 
+			|| (startDate && endDate) // if already have a start/end date, make a new range
+			|| ((new Date(startDate)).getTime() > date.getTime()) // if date is before already selected start date
 		) {
-			setDateRange({
-				...dateRange,
-				startDate: date,
-				endDate: null,
-			});
+			// set/reset start date
+			onDateRangeChanged(
+				[
+					formatDate(date),
+					null
+				], 
+				[]
+			);
+
 		} else {
-			setDateRange({
-				...dateRange,
-				endDate: date,
-			});
+
+			// set end date
+			// setDateRange({
+			// 	...dateRange,
+			// 	endDate: date,
+			// 	weekends: getWeekendDates(dateRange.startDate, date, fullViewDates)
+			// });
+
+			onDateRangeChanged(
+				[
+					startDate,
+					formatDate(date)
+				], 
+				[getWeekendDates((new Date(startDate)), date, fullViewDates)]
+			);
+
 		}
-
 	}
-
-	useEffect(() => {
-		console.log('dateRange', dateRange);
-		onDateRangeChanged([dateRange.startDate, dateRange.endDate], [dateRange.weekends])
-	}, [dateRange])
 
 	return <div className={cx(className)}>
 		<Month 
-			activeMonth={month} 
-			activeYear={year} 
-			endDate={dateRange.endDate}
+			month={month} 
+			year={year}
+			fullViewDates={fullViewDates}
+			endDate={(new Date(endDate))}
 			handleSelect={handleSelect}
-			startDate={dateRange.startDate}
+			startDate={(new Date(startDate))}
 		/>
+
+
+
 	</div>;
 }
