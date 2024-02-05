@@ -72,27 +72,47 @@ export const formatDate = (date: Date) => {
   return `${year}-${month + 1}-${day}`;
 }
 
+
 // all days of current month
 // new Date(year, monthIndex, day)
 export const generateMonth = (month: number, year: number) => {
   const totalDaysInMonth = new Date(year, (month + 1), 0).getDate(); // supposed to be monthIndex; help
 
+  let _formatDate = (date: Date) => {
+    // console.log('month', date.toISOString().split('T')[0]);
+    let dateString = date.toISOString().split('T')[0], 
+        parts = dateString.split('-'),
+        year = parts[0],
+        month = parseInt(parts[1]),
+        day = parseInt(parts[2]);
 
-  let firstDayOfMonth = new Date(year, (month), 1),
+    return {
+      dateObj: date,
+      day,
+      month,
+      year,
+      weekDay: date.getDay(),
+      dateString,
+      monthString: months[month-1]
+    }
+  }
+
+  const firstDayOfMonth = new Date(year, (month), 1),
       lastDayOfMonth = new Date(year, (month + 1), 0),
       currentMonthArr = Array.from({length: totalDaysInMonth}, (_, i) => {
-        return new Date(new Date(year, month, i + 1, 0, 0, 0, 0));
+        return _formatDate(new Date(new Date(year, month, i + 1, 0, 0, 0, 0)));
       });
 
   // generate last days of PREV month 
-  let extraBeforeDays = Array.from({length: firstDayOfMonth.getDay()}, (_, i) => {
-    return new Date(new Date(year, month, firstDayOfMonth.getDate() - i - 1, 0, 0, 0, 0));
+  const extraBeforeDays = Array.from({length: firstDayOfMonth.getDay()}, (_, i) => {
+    return _formatDate(new Date(new Date(year, month, firstDayOfMonth.getDate() - i - 1, 0, 0, 0, 0)));
   });
 
   // generate first days of NEXT month
-  let extraAfterDays = Array.from({length: 6 - lastDayOfMonth.getDay()}, (_, i) => {
-    return new Date(new Date(year, month, lastDayOfMonth.getDate() + i + 1, 0, 0, 0, 0));
+  const extraAfterDays = Array.from({length: 6 - lastDayOfMonth.getDay()}, (_, i) => {
+    return _formatDate(new Date(new Date(year, month, lastDayOfMonth.getDate() + i + 1, 0, 0, 0, 0)));
   });
+
 
   return {
     monthDates: currentMonthArr,

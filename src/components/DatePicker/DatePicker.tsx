@@ -32,33 +32,59 @@ export default function DatePicker(props:DatePickerProps) {
 		srOnDateRangeChanged,
 	} = props;
 
-	const handleSelect = (date: Date) => {
+	const handleSelect = (day: any) => {
 		if(
 			!startDate // no start date 
 			|| (startDate && endDate) // if already have a start/end date, make a new range
-			|| ((new Date(startDate)).getTime() > date.getTime()) // if date is before already selected start date
+			|| ((new Date(startDate)).getTime() > day.day) // if date is before already selected start date
 		) {
+
+			console.log('startDate', startDate)
+			// // set/reset start date
+			// onDateRangeChanged(
+			// 	[
+			// 		formatDate(date),
+			// 		null
+			// 	], 
+			// 	[]
+			// );
+
+			// srOnDateRangeChanged(`Starting Date: ${formatDate(date)}`);
 			// set/reset start date
 			onDateRangeChanged(
 				[
-					formatDate(date),
+					day.dateString,
 					null
 				], 
 				[]
 			);
 
-			srOnDateRangeChanged(`Starting Date: ${formatDate(date)}`);
+			srOnDateRangeChanged(`Starting Date: ${day.dateString}`);
+
+			// set/reset start date
+			console.log('day: ', day)
 
 		} else {
+			// onDateRangeChanged(
+			// 	[
+			// 		startDate,
+			// 		formatDate(date)
+			// 	], 
+			// 	[getWeekendDates((new Date(startDate)), date, fullViewDates)]
+			// );
+
+			// srOnDateRangeChanged(`Selected date range from ${startDate} to ${formatDate(date)}`);
+
 			onDateRangeChanged(
 				[
 					startDate,
-					formatDate(date)
+					day.dateString
 				], 
-				[getWeekendDates((new Date(startDate)), date, fullViewDates)]
+				[getWeekendDates((new Date(startDate)), day.dateObj, fullViewDates)]
 			);
 
-			srOnDateRangeChanged(`Selected date range from ${startDate} to ${formatDate(date)}`);
+			srOnDateRangeChanged(`Selected date range from ${startDate} to ${day.dateString}`);
+
 
 		}
 	}
