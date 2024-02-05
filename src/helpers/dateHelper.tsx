@@ -13,6 +13,30 @@ export const months = [
   'December', 
 ]
 
+export const years = [
+  '2020',
+  '2021',
+  '2022',
+  '2023',
+  '2024',
+  '2025',
+  '2026',
+];
+
+export const getYears = () => {
+  const year =  new Date().getFullYear();
+
+  let prevYears = Array.from({length: 3}, (_, i) => {
+    return new Date(new Date((year - i - 1), 1, 1, 0, 0, 0, 0)).getFullYear().toString();
+  });
+  let nextYears = Array.from({length: 3}, (_, i) => {
+    return new Date(new Date((year + i + 1), 1, 1, 0, 0, 0, 0)).getFullYear().toString();
+  });
+
+
+  return [ ...prevYears.reverse(), year.toString(), ...nextYears];
+}
+
 export const daysOfTheWeek = [
   'S',
   'M',

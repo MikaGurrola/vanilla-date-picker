@@ -5,6 +5,8 @@ import { formatDate, getWeekendDates } from '../../helpers/dateHelper';
 export interface DatePickerProps {
 	className?: string,
 	onDateRangeChanged: any,
+	onMonthChange: any, 
+	onYearChange: any, 
 	month:any, 
 	year: any, 
 	fullViewDates: any,
@@ -17,6 +19,8 @@ export default function DatePicker(props:DatePickerProps) {
 	const { 
 		className,
 		onDateRangeChanged,
+		onMonthChange,
+		onYearChange,
 		month, 
 		year,
 		fullViewDates,
@@ -66,10 +70,9 @@ export default function DatePicker(props:DatePickerProps) {
 			fullViewDates={fullViewDates}
 			endDate={(new Date(endDate))}
 			handleSelect={handleSelect}
+			onMonthChange={onMonthChange}
+			onYearChange={onYearChange}
 			startDate={(new Date(startDate))}
 		/>
-
-
-
 	</div>;
 }

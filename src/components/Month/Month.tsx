@@ -1,6 +1,7 @@
 import cx from 'classnames';
 import Day from '../Day';
-import { daysOfTheWeek, months } from '../../helpers/dateHelper';
+import { daysOfTheWeek, getYears, months, years } from '../../helpers/dateHelper';
+import Select from '../Select';
 
 export interface MonthProps {
 	className?: string,
@@ -9,6 +10,8 @@ export interface MonthProps {
 	endDate: any,
 	fullViewDates: any, 
 	handleSelect: any,
+	onMonthChange: any,
+	onYearChange: any,
 	startDate: any,
 }
 
@@ -20,13 +23,26 @@ export default function Month(props:MonthProps) {
 		endDate,
 		fullViewDates,
 		handleSelect,
+		onMonthChange, 
+		onYearChange,
 		startDate,
 	} = props;
 
-	return <div className={cx(className)}>
+	return <div className={cx(className, 'p-6')}>
 		<div className="navbar">
-			<button className="p-4 rounded">{months[month]}</button>
-			<button className="p-4 rounded">{year}</button>
+			<Select 
+				label={'Month'}
+				options={months}
+				onSelect={onMonthChange}
+				value={months[month]}
+			/>
+
+			<Select 
+				label={'Year'}
+				options={getYears()}
+				onSelect={onYearChange}
+				value={year.toString()}
+			/>
 		</div>
 		
 
@@ -54,7 +70,7 @@ export default function Month(props:MonthProps) {
 						isInCurrentMonth={day.getMonth() === month}
 						isStartDate={day.getTime() === startDate.getTime()}
 						isTheWeekend={day.getDay() === 0 || day.getDay() === 6}
-						isWithinRange={day > startDate && day < endDate}
+						isWithinRange={day.getTime() > startDate.getTime() && day.getTime() < endDate.getTime()}
 						key={`${day.getMonth()}-${day.getDate()}-${day.getFullYear()}`} 
 					/>
 

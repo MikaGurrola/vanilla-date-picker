@@ -1,5 +1,6 @@
 import cx from 'classnames';
-import { MouseEventHandler } from 'react';
+import { months } from '../../helpers/dateHelper';
+// import { MouseEventHandler } from 'react';
 
 export interface DayProps {
 	className?: string,
@@ -26,6 +27,7 @@ export default function Day(props:DayProps) {
 
 	return <div className={cx(className)}>
 		<button 
+			aria-label={`${date.getDate()} of ${months[date.getMonth()]}`}
 			className={`
 				p-4 aspect-square disabled:cursor-not-allowed
 				${isInCurrentMonth ? 'isInCurrentMonth' : ''}

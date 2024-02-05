@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import './App.scss';
 import DatePicker from './components/DatePicker';
-import { generateMonth } from './helpers/dateHelper';
+import { generateMonth, months } from './helpers/dateHelper';
 import PredefinedDates from './components/PredefinedDates';
 
 function App() {
@@ -11,6 +11,8 @@ function App() {
         month = today.getMonth(),
         year = today.getFullYear(),
         initalCalendarData = generateMonth(month, year);
+
+  generateMonth(month, year);   
         
 	const [dateRange, setDateRange] = useState<any>({
 		startDate: null,
@@ -35,15 +37,7 @@ function App() {
 
   }
 
-
-  useEffect(() => {
-    console.log(generateMonth(month, year));
-  }, [])
-
-
-
   const onPredefinedDatesClicked = (data:any) => {
-    console.log('data', data)
     setDateRange({
       startDate: data.startDate,
       endDate: data.endDate,
@@ -51,11 +45,50 @@ function App() {
     });
   }
 
+  const onMonthChange = (e:any) => {
+    let newMonth = months.indexOf(e.target.value);
+    let newCalendar = generateMonth(newMonth, calendarState.year);
+    setCalendarState({
+      monthDates: newCalendar.monthDates, // days of month
+      fullViewDates: newCalendar.fullViewDates, // days of month + prev/next month to fill out days in week
+      targetDate: newCalendar.monthDates[0],
+      month: newMonth, 
+      year
+    })
+
+    setDateRange({
+      startDate: null,
+      endDate: null,
+      weekends: []
+    })
+
+  }
+
+  const onYearChange = (e:any) => {
+    let newYear = e.target.value;
+    let newCalendar = generateMonth(calendarState.month, newYear);
+    setCalendarState({
+      monthDates: newCalendar.monthDates, // days of month
+      fullViewDates: newCalendar.fullViewDates, // days of month + prev/next month to fill out days in week
+      targetDate: newCalendar.monthDates[0],
+      month: calendarState.month, 
+      year: newYear
+    })
+
+    setDateRange({
+      startDate: null,
+      endDate: null,
+      weekends: []
+    })
+  }
+
 
   return (
     <div className="App">
       <DatePicker 
         onDateRangeChanged={onDateRangeChanged} 
+        onMonthChange={onMonthChange}
+        onYearChange={onYearChange}
         month={calendarState.month} 
         year={calendarState.year}
         fullViewDates={calendarState.fullViewDates}
