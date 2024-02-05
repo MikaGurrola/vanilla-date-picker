@@ -29,7 +29,8 @@ export default function Day(props:DayProps) {
 		<button 
 			aria-label={`${date.getDate()} of ${months[date.getMonth()]}`}
 			className={`
-				p-4 aspect-square disabled:cursor-not-allowed
+				aspect-square disabled:cursor-not-allowed rounded p-4
+				focus-within:bg-blue-100 focus-within:outline outline-offset-2 outline-2 outline-blue-500
 				${isInCurrentMonth ? 'isInCurrentMonth' : ''}
 				${isStartDate ? 'isStartDate' : ''}
 				${isEndDate ? 'isEndDate' : ''}

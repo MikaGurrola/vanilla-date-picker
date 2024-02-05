@@ -40,13 +40,13 @@ export default function PredefinedDates(props:any) {
 			<ul>
 				<li>
 					<button 
-						className="p-2 border border-2 rounded"
+						className="px-4 py-2 bg-slate-100 rounded focus-within:bg-blue-100 focus-within:outline outline-offset-2 outline-2 outline-blue-500"
 						onClick={selectFirstSevenDays}
 					>First Seven Days</button>
 				</li>
 				<li>
 					<button 
-						className="p-2 border border-2 rounded"
+						className="px-4 py-2 bg-slate-100 rounded focus-within:bg-blue-100 focus-within:outline outline-offset-2 outline-2 outline-blue-500"
 						onClick={selectLastSevenDays}
 					>Last Seven Days</button>
 				</li>

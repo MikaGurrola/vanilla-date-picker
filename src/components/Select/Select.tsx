@@ -16,11 +16,11 @@ export default function Select(props:SelectProps) {
 		onSelect, 
 		value,
 	} = props
-	return <div className={cx(className,'select-input', 'bg-slate-100 focus-within:bg-blue-100 focus-within:outline max-w-fit flex items-center mx-auto mb-4 outline-offset-2 outline-2 outline-blue-500 px-2 px-4 py-2 rounded-md relative w-full')}>
+	return <div className={cx(className,'select-input', 'bg-slate-100 focus-within:bg-blue-100 focus-within:outline max-w-fit flex items-center mx-auto mb-4 outline-offset-2 outline-2 outline-blue-500 px-4 py-2 rounded-md relative w-full')}>
+	<label className="sr-only" htmlFor={`select-input-${label}`}>{label}</label>
 	<select
 		name={`select-input-${label}`}
 		id={`select-input-${label}`}
-		aria-label={label}
 		onChange={onSelect}
 		className="outline-none appearance-none bg-transparent pr-4" 
 		value={value}

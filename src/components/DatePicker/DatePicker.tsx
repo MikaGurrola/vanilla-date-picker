@@ -12,6 +12,8 @@ export interface DatePickerProps {
 	fullViewDates: any,
 	startDate: any,
 	endDate: any,
+	srMessage: string,
+	srOnDateRangeChanged: any, 
 }
 
 
@@ -26,6 +28,8 @@ export default function DatePicker(props:DatePickerProps) {
 		fullViewDates,
 		startDate,
 		endDate,
+		srMessage,
+		srOnDateRangeChanged,
 	} = props;
 
 	const handleSelect = (date: Date) => {
@@ -43,15 +47,9 @@ export default function DatePicker(props:DatePickerProps) {
 				[]
 			);
 
+			srOnDateRangeChanged(`Starting Date: ${formatDate(date)}`);
+
 		} else {
-
-			// set end date
-			// setDateRange({
-			// 	...dateRange,
-			// 	endDate: date,
-			// 	weekends: getWeekendDates(dateRange.startDate, date, fullViewDates)
-			// });
-
 			onDateRangeChanged(
 				[
 					startDate,
@@ -59,6 +57,8 @@ export default function DatePicker(props:DatePickerProps) {
 				], 
 				[getWeekendDates((new Date(startDate)), date, fullViewDates)]
 			);
+
+			srOnDateRangeChanged(`Selected date range from ${startDate} to ${formatDate(date)}`);
 
 		}
 	}
@@ -73,6 +73,7 @@ export default function DatePicker(props:DatePickerProps) {
 			onMonthChange={onMonthChange}
 			onYearChange={onYearChange}
 			startDate={(new Date(startDate))}
+			srMessage={srMessage}
 		/>
 	</div>;
 }

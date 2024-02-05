@@ -13,6 +13,7 @@ export interface MonthProps {
 	onMonthChange: any,
 	onYearChange: any,
 	startDate: any,
+	srMessage: string,
 }
 
 export default function Month(props:MonthProps) {
@@ -26,9 +27,15 @@ export default function Month(props:MonthProps) {
 		onMonthChange, 
 		onYearChange,
 		startDate,
+		srMessage,
 	} = props;
 
 	return <div className={cx(className, 'p-6')}>
+
+		<div className="sr-only" aria-live="assertive" >
+			<p>{srMessage}</p>
+		</div>
+
 		<div className="navbar">
 			<Select 
 				label={'Month'}
@@ -62,7 +69,8 @@ export default function Month(props:MonthProps) {
 		<div className="days">
 			{
 				fullViewDates.length > 0 && fullViewDates.map((day:Date) => {
-
+					// TODO Refactor 
+					
 					return <Day 
 						date={day} 
 						handleSelect={handleSelect}

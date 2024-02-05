@@ -14,7 +14,9 @@ function App() {
 
   generateMonth(month, year);   
         
-	const [dateRange, setDateRange] = useState<any>({
+	const [srMessage, setSrMessage] = useState<string>('Select a start and end date.');
+
+  const [dateRange, setDateRange] = useState<any>({
 		startDate: null,
 		endDate: null,
 		weekends: []
@@ -34,7 +36,10 @@ function App() {
       endDate: selectedDates[1],
       weekends: weekendDates
     });
+  }
 
+  const srOnDateRangeChanged = (message:string) => {
+    setSrMessage(message);
   }
 
   const onPredefinedDatesClicked = (data:any) => {
@@ -43,6 +48,8 @@ function App() {
       endDate: data.endDate,
       weekends: data.weekends
     });
+
+    setSrMessage(`Selected pre-defined dates: ${data.startDate} thru ${data.endDate}`);
   }
 
   const onMonthChange = (e:any) => {
@@ -54,13 +61,15 @@ function App() {
       targetDate: newCalendar.monthDates[0],
       month: newMonth, 
       year
-    })
+    });
 
     setDateRange({
       startDate: null,
       endDate: null,
       weekends: []
-    })
+    });
+
+    setSrMessage(`${months[newMonth]} ${calendarState.year}, no dates selected`);
 
   }
 
@@ -73,13 +82,15 @@ function App() {
       targetDate: newCalendar.monthDates[0],
       month: calendarState.month, 
       year: newYear
-    })
+    });
 
     setDateRange({
       startDate: null,
       endDate: null,
       weekends: []
-    })
+    });
+
+    setSrMessage(`${months[calendarState.month]} ${newYear}, no dates selected.`);
   }
 
 
@@ -94,6 +105,8 @@ function App() {
         fullViewDates={calendarState.fullViewDates}
         startDate={dateRange.startDate}
         endDate={dateRange.endDate}
+        srMessage={srMessage}
+        srOnDateRangeChanged={srOnDateRangeChanged}
       />
 
 
